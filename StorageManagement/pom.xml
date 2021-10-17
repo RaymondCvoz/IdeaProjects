@@ -40,8 +40,17 @@
       <artifactId>javax.servlet-api</artifactId>
       <version>4.0.1</version>
       <scope>provided</scope>
-    </dependency>
 
+      <!-- https://mvnrepository.com/artifact/javax.servlet.jsp.jstl/jstl -->
+
+
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/javax.servlet.jsp.jstl/jstl-api -->
+    <dependency>
+      <groupId>javax.servlet.jsp.jstl</groupId>
+      <artifactId>jstl-api</artifactId>
+      <version>1.2</version>
+    </dependency>
 
   </dependencies>
 
@@ -80,15 +89,5 @@
         </plugin>
       </plugins>
     </pluginManagement>
-      <plugins>
-          <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-compiler-plugin</artifactId>
-              <configuration>
-                  <source>11</source>
-                  <target>11</target>
-              </configuration>
-          </plugin>
-      </plugins>
   </build>
 </project>

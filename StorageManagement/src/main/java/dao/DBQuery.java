@@ -3,6 +3,7 @@ package dao;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.sql.*;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.logging.Logger;
 
 public class DBQuery
 {
-    private List<Object> result;
+
     private PreparedStatement preparedStatement;
     static Connection connection;
     private ResultSet resultSet;
@@ -33,7 +34,7 @@ public class DBQuery
         if (equal.size() > 0 || like.size() > 0) sql += " where ";
         for (Map.Entry<String, ?> entry : equal.entrySet())
         {
-            sql += entry.getKey() + " = " + entry.getValue() + " and ";
+            sql += entry.getKey() + " = '" + entry.getValue() + "' and ";
         }
         for (Map.Entry<String, ?> entry : like.entrySet())
         {
@@ -45,13 +46,17 @@ public class DBQuery
 
     private List<Object> getObjects(String className, String sql) throws SQLException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, java.lang.reflect.InvocationTargetException
     {
+        List<Object> result = new LinkedList<>();
+
         preparedStatement = connection.prepareStatement(sql);
         System.out.println("sql!:"+ sql);
 
         resultSet = preparedStatement.executeQuery();
         ResultSetMetaData metaData = resultSet.getMetaData();
 
-        Class<?> adaptive = Class.forName(className);
+        System.out.println("entities." + className);
+        Class<?> adaptive = Class.forName("entities." + className);
+
         Constructor<?> constructor = adaptive.getConstructor();
 
         Method[] methods = adaptive.getDeclaredMethods();
@@ -67,7 +72,8 @@ public class DBQuery
                     {
                         if (metaData.getColumnName(i).equals(currentMethod.getName().toLowerCase(Locale.ROOT).substring(3)))
                         {
-                            currentMethod.invoke(o, currentMethod.getName());
+                            System.out.println(metaData.getColumnName(i));
+                            currentMethod.invoke(o,resultSet.getObject(i));
                         }
                     }
                 }

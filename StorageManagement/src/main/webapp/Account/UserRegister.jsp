@@ -8,9 +8,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>用户注册</title>
 </head>
 <body>
-
+    <form action="dispatch" method="post">
+        <table>
+            <tr>
+                <td><input type="text" name="username"></td>
+            </tr>
+            <tr>
+                <td><input type="password" name="password"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="注册"></td>
+            </tr>
+        </table>
+        <input type="hidden" name="dispatchType" value="register">
+    </form>
 </body>
 </html>

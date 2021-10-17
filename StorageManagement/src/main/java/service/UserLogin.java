@@ -1,6 +1,7 @@
 package service;
 
 import dao.DBQuery;
+import entities.User;
 import entities.UserAccount;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,20 +22,26 @@ public class UserLogin extends HttpServlet
         String userName = (String) session.getAttribute("LoginUserName");
         String password = (String) session.getAttribute("LoginPassword");
 
-        try
+        try//验证用户
         {
+
             DBQuery dbQuery = new DBQuery();
             Map<String,String> equal = new HashMap<>();
             Map<String,String> like = new HashMap<>();
-            equal.put("`name`",userName);
-            equal.put("`password`",password);
+            equal.put("name",userName);
+            equal.put("password",password);
             List<Object> result = dbQuery.queryByCondition("user",equal,like
-                    ,"user");
-            if(result.size() == 1)
+                    ,"User");
+
+            if(result.size() == 1)//登录成功，记录当前登录用户信息
             {
-                resp.sendRedirect(req.getServletContext().getContextPath() + "/Account");
+                User currentLoginUser = (User) result.get(0);
+                session.setAttribute("CurrentLoginUserName",userName);
+                session.setAttribute("CurrentLoginUserId",currentLoginUser.getId());
+
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/Product/ProductGallery.jsp");
             }
-            else
+            else//登录失败
             {
                 resp.sendRedirect(req.getServletContext().getContextPath() + "/ErrorPage.jsp");
             }

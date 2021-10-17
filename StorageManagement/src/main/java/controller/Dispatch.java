@@ -26,7 +26,11 @@ public class Dispatch extends HttpServlet
         }
         else if(dispatchType.equals("register"))
         {
-
+            String userName = req.getParameter("username");
+            String password = req.getParameter("password");
+            session.setAttribute("RegisterUserName",userName);
+            session.setAttribute("RegisterPassword",password);
+            resp.sendRedirect(req.getServletContext().getContextPath() + "/service/UserRegister");
         }
     }
 
