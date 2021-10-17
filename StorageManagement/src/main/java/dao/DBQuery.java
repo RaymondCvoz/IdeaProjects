@@ -13,8 +13,8 @@ public class DBQuery
 {
 
     private PreparedStatement preparedStatement;
-    static Connection connection;
     private ResultSet resultSet;
+    static Connection connection;
 
     public DBQuery() throws Exception
     {
