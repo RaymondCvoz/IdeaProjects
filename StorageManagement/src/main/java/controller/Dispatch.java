@@ -29,7 +29,7 @@ public class Dispatch extends HttpServlet
             String userName = req.getParameter("username");
             String password = req.getParameter("password");
             session.setAttribute("RegisterUserName",userName);
-            session.setAttribute("RegisterPassword",password);
+            session.setAttribute("RegisterUserPassword",password);
             resp.sendRedirect(req.getServletContext().getContextPath() + "/service/UserRegister");
         }
     }

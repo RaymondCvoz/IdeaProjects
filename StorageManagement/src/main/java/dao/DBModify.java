@@ -18,7 +18,7 @@ public class DBModify
         this.connection = connKit.getConnection();
     }
 
-    boolean update(String tableName, Map<String,?>equal,Map<String,?>like,Map<String,?>updateValue) throws Exception
+    public boolean update(String tableName, Map<String,?>equal,Map<String,?>like,Map<String,?>updateValue) throws Exception
     {
         String sql = "UPDATE " + tableName +" SET ";
         for(Map.Entry<String, ?> entry : updateValue.entrySet())
@@ -46,7 +46,7 @@ public class DBModify
         return true;
     }
 
-    boolean delete(String tableName,Map<String, ?>equal,Map<String,?> like) throws Exception
+    public boolean delete(String tableName,Map<String, ?>equal,Map<String,?> like) throws Exception
     {
         String sql = "DELETE FROM " + tableName + " WHERE ";
 
@@ -66,17 +66,18 @@ public class DBModify
         return true;
     }
 
-    boolean insert(String tableName, List<String> values) throws Exception
+    public boolean insert(String tableName, List<String> values) throws Exception
     {
         String sql = "INSERT INTO " + tableName + " VALUES(";
 
         for(String s : values)
         {
-            sql += s + ",";
+            sql += "'" + s + "',";
         }
         sql = sql.substring(0,sql.length() - 1);
         sql += ")";
 
+        System.out.println(sql);
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.execute();
 

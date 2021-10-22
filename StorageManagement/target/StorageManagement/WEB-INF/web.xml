@@ -14,6 +14,16 @@
     <servlet-name>UserLogin</servlet-name>
     <servlet-class>service.UserLogin</servlet-class>
   </servlet>
+  
+  <servlet>
+    <servlet-name>UserRegister</servlet-name>
+    <servlet-class>service.UserRegister</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>FetchProduct</servlet-name>
+    <servlet-class>service.FetchProduct</servlet-class>
+  </servlet>
 
 
   <servlet-mapping>
@@ -25,5 +35,14 @@
     <servlet-name>UserLogin</servlet-name>
     <url-pattern>/service/UserLogin</url-pattern>
   </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>UserRegister</servlet-name>
+    <url-pattern>/service/UserRegister</url-pattern>
+  </servlet-mapping>
 
+  <servlet-mapping>
+    <servlet-name>FetchProduct</servlet-name>
+    <url-pattern>/service/FetchProduct</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -16,10 +16,7 @@
         <input type="hidden" name="dispatchType" value="login">
     </form>
 
-    <form action="dispatch" method="post">
-        <input type="submit" value="注册">
-        <input type="hidden" name = "dispatchType" value="register">
-    </form>
+    <a href="Account/UserRegister.jsp">注册</a>
 
 </body>
 </html>

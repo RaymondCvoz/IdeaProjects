@@ -37,9 +37,9 @@ public class UserLogin extends HttpServlet
             {
                 User currentLoginUser = (User) result.get(0);
                 session.setAttribute("CurrentLoginUserName",userName);
-                session.setAttribute("CurrentLoginUserId",currentLoginUser.getId());
+                //session.setAttribute("CurrentLoginUserId",currentLoginUser.getId());
 
-                resp.sendRedirect(req.getServletContext().getContextPath() + "/Product/ProductGallery.jsp");
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/service/FetchProduct");
             }
             else//登录失败
             {
