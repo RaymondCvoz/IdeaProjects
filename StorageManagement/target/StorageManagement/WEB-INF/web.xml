@@ -24,7 +24,11 @@
     <servlet-name>FetchProduct</servlet-name>
     <servlet-class>service.FetchProduct</servlet-class>
   </servlet>
-
+  
+  <servlet>
+    <servlet-name>CartHandler</servlet-name>
+    <servlet-class>service.CartHandler</servlet-class>
+  </servlet>
 
   <servlet-mapping>
     <servlet-name>dispatch</servlet-name>
@@ -44,5 +48,10 @@
   <servlet-mapping>
     <servlet-name>FetchProduct</servlet-name>
     <url-pattern>/service/FetchProduct</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>CartHandler</servlet-name>
+    <url-pattern>/service/CartHandler</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -13,6 +13,7 @@
     %>
     <table>
         <%
+            if(result != null)
             for(Object object : result)
             {
                 Product current = (Product) object;
@@ -21,6 +22,12 @@
                     <td><%=current.getName()%></td>
                     <td><%=current.getStatus()%></td>
                     <td><%=current.getPrice()%></td>
+                    <td>
+                        <form action="../service/CartHandler" method="post">
+                            <input type="hidden" name="<%=current.getId()%>">
+                            <input type="submit" value="加入购物车">
+                        </form>
+                    </td>
                 </tr>
         <%
             }
