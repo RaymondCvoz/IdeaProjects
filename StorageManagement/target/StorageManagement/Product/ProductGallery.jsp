@@ -11,7 +11,7 @@
     <%
         List<Object> result = (List<Object>) session.getAttribute("productList");
     %>
-    <table>
+    <table border="1px" align="center">
         <%
             if(result != null)
             for(Object object : result)
@@ -19,15 +19,23 @@
                 Product current = (Product) object;
         %>
                 <tr>
+                    <td>产品名称</td>
+                    <td>产品价格</td>
+                    <td>操作</td>
+                </tr>
+                <tr>
                     <td><%=current.getName()%></td>
-                    <td><%=current.getStatus()%></td>
                     <td><%=current.getPrice()%></td>
                     <td>
-                        <form action="../service/CartHandler" method="post">
-                            <input type="hidden" name="<%=current.getId()%>">
+                        <form action="../service/CartHandler?req=add" method="post">
+                            <input type="hidden" value="<%=current.getId()%>" name="ProductId">
+                            <input type="hidden" value="<%=current.getName()%>" name="ProductName">
                             <input type="submit" value="加入购物车">
                         </form>
                     </td>
+                </tr>
+                <tr>
+                    <td><a href="Cart.jsp">查看购物车</a></td>
                 </tr>
         <%
             }
