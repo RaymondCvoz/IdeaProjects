@@ -1,6 +1,4 @@
-package service;
-
-import dao.DBQuery;
+package controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,26 +7,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class FetchProduct extends HttpServlet
+public class Dispatch extends HttpServlet
 {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         HttpSession session = req.getSession();
-        List<Object> result = new ArrayList<>();
-        try
+        String dispatchType = req.getParameter("dispatchType");
+        if(dispatchType.equals("login"))
         {
-            DBQuery dbQuery = new DBQuery();
-            result = dbQuery.queryAll("product","Product");
-            session.setAttribute("productList",result);
-            resp.sendRedirect(req.getServletContext().getContextPath() + "/Product/ProductGallery.jsp");
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
+            String userName = req.getParameter("username");
+            String password = req.getParameter("password");
+            session.setAttribute("LoginUserName",userName);
+            session.setAttribute("LoginPassword",password);
+            resp.sendRedirect(req.getServletContext().getContextPath() + "/service/UserLogin");
         }
     }
 

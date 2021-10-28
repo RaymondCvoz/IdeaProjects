@@ -1,0 +1,84 @@
+package dao;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.sql.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+public class DBQuery
+{
+
+    private PreparedStatement preparedStatement;
+    private ResultSet resultSet;
+    static Connection connection;
+
+    public DBQuery() throws Exception
+    {
+        ConnKit connKit = new ConnKit();
+        this.connection = connKit.getConnection();
+    }
+
+    public List<Object> queryAll(String tableName, String className) throws Exception
+    {
+        String sql = "select * from " + tableName;
+        return getObjects(className, sql);
+    }
+
+    public List<Object> queryByCondition(String tableName, Map<String, ?> equal, Map<String, ?> like, String className) throws Exception
+    {
+        String sql = "select * from " + tableName;
+        if (equal.size() > 0 || like.size() > 0) sql += " where ";
+        for (Map.Entry<String, ?> entry : equal.entrySet())
+        {
+            sql += entry.getKey() + " = '" + entry.getValue() + "' and ";
+        }
+        for (Map.Entry<String, ?> entry : like.entrySet())
+        {
+            sql += entry.getKey() + " like '%" + entry.getValue() + "%' and ";
+        }
+        sql = sql.substring(0,sql.length() - 4);
+        return getObjects(className, sql);
+    }
+
+    private List<Object> getObjects(String className, String sql) throws SQLException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, java.lang.reflect.InvocationTargetException
+    {
+        List<Object> result = new LinkedList<>();
+
+        preparedStatement = connection.prepareStatement(sql);
+        System.out.println("sql!:"+ sql);
+
+        resultSet = preparedStatement.executeQuery();
+        ResultSetMetaData metaData = resultSet.getMetaData();
+
+        System.out.println("entities." + className);
+        Class<?> adaptive = Class.forName("entities." + className);
+
+        Constructor<?> constructor = adaptive.getConstructor();
+
+        Method[] methods = adaptive.getDeclaredMethods();
+
+        while (resultSet.next())
+        {
+            Object o = constructor.newInstance();
+            for (Method currentMethod : methods)
+            {
+                if (currentMethod.getName().startsWith("set"))
+                {
+                    for (int i = 1; i <= metaData.getColumnCount(); i++)
+                    {
+                        if (metaData.getColumnName(i).equals(currentMethod.getName().toLowerCase(Locale.ROOT).substring(3)))
+                        {
+                            System.out.println(metaData.getColumnName(i));
+                            currentMethod.invoke(o,resultSet.getObject(i));
+                        }
+                    }
+                }
+            }
+            result.add(o);
+        }
+        return result;
+    }
+}
