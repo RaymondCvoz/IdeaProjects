@@ -12,17 +12,17 @@
         List<Object> result = (List<Object>) session.getAttribute("productList");
     %>
     <table border="1px" align="center">
+        <tr>
+            <td>产品名称</td>
+            <td>产品价格</td>
+            <td>操作</td>
+        </tr>
         <%
             if(result != null)
             for(Object object : result)
             {
                 Product current = (Product) object;
         %>
-                <tr>
-                    <td>产品名称</td>
-                    <td>产品价格</td>
-                    <td>操作</td>
-                </tr>
                 <tr>
                     <td><%=current.getName()%></td>
                     <td><%=current.getPrice()%></td>
@@ -34,12 +34,13 @@
                         </form>
                     </td>
                 </tr>
-                <tr>
-                    <td><a href="Cart.jsp">查看购物车</a></td>
-                </tr>
+
         <%
             }
         %>
+        <tr>
+            <td><a href="Cart.jsp">查看购物车</a></td>
+        </tr>
     </table>
 </body>
 </html>

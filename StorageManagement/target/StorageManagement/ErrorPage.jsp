@@ -8,9 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>错误</title>
 </head>
 <body>
-
+    <p><a>登录失败，请检查用户名和密码</a></p>
+    <p><a href="index.jsp">点此返回主页</a></p>
 </body>
 </html>
