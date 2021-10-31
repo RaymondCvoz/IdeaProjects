@@ -34,7 +34,7 @@
     }
 %>
     <tr>
-        <td><a href="service/CartHandler?req=check">结算</a></td>、
+        <td><a href="../UNfinish.jsp">结算</a></td>、
         <td><a href="ProductGallery.jsp">返回</a></td>
     </tr>
   </table>
